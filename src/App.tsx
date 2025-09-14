@@ -1,10 +1,12 @@
-
+import { RouterProvider } from "react-router-dom";
+import { Providers } from "./providers";
+import { router } from "@/router";
 
 function App() {
   return (
-    <>
-      <span className="bg-rose-500 text-white">A</span>
-    </>
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>
   );
 }
 
