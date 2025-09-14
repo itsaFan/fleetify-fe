@@ -1,10 +1,9 @@
-
-
-
-
+import { Employees } from "@/features/employee/views/Employees";
 
 export default function EmployeePage() {
   return (
-    <div>EmployeePage</div>
-  )
+    <div className="max-w-3xl w-full">
+      <Employees />
+    </div>
+  );
 }

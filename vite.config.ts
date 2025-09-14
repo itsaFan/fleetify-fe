@@ -3,7 +3,6 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
@@ -22,6 +21,22 @@ export default defineConfig({
       "@config": path.resolve(__dirname, "./src/config"),
       "@constants": path.resolve(__dirname, "./src/constants"),
       "@assets": path.resolve(__dirname, "./src/assets"),
+    },
+  },
+  server: {
+    proxy: {
+      "/v1": {
+        target: "https://api-steffansim-fleetify.zeabur.app",
+        changeOrigin: true,
+        secure: false,
+        configure: (proxy) => {
+          proxy.on("proxyRes", (proxyRes) => {
+            proxyRes.headers["Access-Control-Allow-Origin"] = "http://localhost:5173";
+            proxyRes.headers["Access-Control-Allow-Credentials"] = "true";
+            proxyRes.headers["Vary"] = "Origin";
+          });
+        },
+      },
     },
   },
 });
