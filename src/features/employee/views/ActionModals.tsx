@@ -62,7 +62,7 @@ export function EditEmployeeModal({ isOpen, setIsOpen, employee }: Omit<Props, "
 
   const content = (
     <div
-      className={`fixed flex justify-center top-0 inset-x-0 z-[10] h-dvh py-12 px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
+      className={`fixed flex justify-center top-0 inset-x-0 z-[10] h-dvh pb-12 pt-24 px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
       onClick={closeModal}>
       <button className="bg-none border-none text-app-red text-lg absolute cursor-pointer right-2 top-2">
         <X />
@@ -72,7 +72,10 @@ export function EditEmployeeModal({ isOpen, setIsOpen, employee }: Omit<Props, "
         animate={{ y: 0, opacity: 1 }}
         onClick={(e) => e.stopPropagation()}
         className={`w-full max-w-xl h-fit rounded-xl overflow-hidden shadow cursor-auto bg-secondary`}>
-        <div className="flex p-4 w-full">
+        <div className="flex flex-col gap-3 p-4 w-full">
+          <span className="font-bold text-lg">Edit Employee</span>
+
+          <div className="w-full h-[1px] bg-black/10" />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleUpdateEmployee)} className="flex flex-col w-full gap-3">
               <FormField
@@ -141,14 +144,16 @@ export function EditEmployeeModal({ isOpen, setIsOpen, employee }: Omit<Props, "
                 )}
               />
 
-              <div className="flex flex-wrap items-center justify-end gap-3">
+              <div className="flex flex-wrap items-center justify-end gap-3 pt-3 mt-3 border-t">
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="rounded-md px-2 py-1 bg-app-red text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
+                  className="rounded-md text-sm px-2 py-1 bg-app-red text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
                   Cancel
                 </button>
-                <button type="submit" className="rounded-md px-2 py-1 bg-app-green text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
+                <button
+                  type="submit"
+                  className="rounded-md text-sm px-2 py-1 bg-app-green text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
                   Save Changes
                 </button>
               </div>
@@ -175,10 +180,14 @@ export function DeleteEmployeeModal({ isOpen, setIsOpen, empId }: Omit<Props, "e
     }
   }, [isOpen]);
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   const content = (
     <div
-      className={`fixed flex justify-center top-0 inset-x-0 z-[1000] h-dvh py-12 px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
-      onClick={() => setIsOpen(false)}>
+      className={`fixed flex justify-center top-0 inset-x-0 z-[1000] h-dvh pb-12 pt-[25%] px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
+      onClick={closeModal}>
       <button className="bg-none border-none text-app-red text-lg absolute cursor-pointer right-2 top-2">
         <X />
       </button>
@@ -186,10 +195,24 @@ export function DeleteEmployeeModal({ isOpen, setIsOpen, empId }: Omit<Props, "e
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         onClick={(e) => e.stopPropagation()}
-        className={`w-full max-w-xl h-fit rounded-xl overflow-hidden shadow cursor-auto bg-secondary`}>
-        <div>
-          <span>delete modal</span>
-          <span>{empId}</span>
+        className={`w-full max-w-md h-fit rounded-xl overflow-hidden shadow cursor-auto bg-secondary`}>
+        <div className="flex flex-col gap-1 p-4 w-full">
+          <span className="font-bold text-lg">Delete Employee</span>
+          <span className="text-sm opacity-75">This action cannot be undone. This will delete employee permanently.</span>
+
+          <div className="flex flex-wrap items-center justify-end gap-2 pt-3 mt-3 border-t">
+            <button
+              type="button"
+              onClick={closeModal}
+              className="rounded-md text-sm px-2 py-1 bg-zinc-400 text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="rounded-md text-sm px-2 py-1 bg-app-red text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
+              Delete Employee
+            </button>
+          </div>
         </div>
       </motion.div>
     </div>

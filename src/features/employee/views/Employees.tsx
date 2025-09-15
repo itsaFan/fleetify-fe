@@ -6,6 +6,7 @@ import type { QueryParams } from "../types";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/use-debounce";
 import EmployeeActions from "./EmployeeActions";
+import { Plus } from "lucide-react";
 
 export function Employees() {
   const [page, setPage] = useState<number>(1);
@@ -45,8 +46,12 @@ export function Employees() {
   return (
     <>
       <div className="flex flex-col gap-3  p-3 sm:p-6 border border-border rounded-lg shadow-md w-full min-h-[24rem]">
-        <div className="">
+        <div className="flex flex-wrap items-center justify-between">
           <span className="text-lg font-semibold">Total Employee ({pagination?.totalData || 0})</span>
+
+          <button type="button" className="rounded-md flex items-center gap-1 text-sm px-2 py-1 bg-app-brand text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
+            <Plus size={14} />Add Employee
+          </button>
         </div>
         <div className="w-full h-[1px] bg-black/10" />
         <div>
