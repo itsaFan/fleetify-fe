@@ -4,6 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-app-brand: var(--color-brand);
+  --color-app-blue: var(--apple-blue);
+  --color-app-red: var(--apple-red);
+  --color-app-green: var(--apple-green);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -42,6 +46,10 @@
 }
 
 :root {
+  --color-brand: oklch(0.6448 0.2016 19.98);
+  --apple-blue: oklch(0.6321 0.2018 254.09);
+  --apple-red: oklch(0.6532 0.2328 25.74);
+  --apple-green: oklch(0.7303 0.1944 147.44);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);

@@ -5,6 +5,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import type { QueryParams } from "../types";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/use-debounce";
+import EmployeeActions from "./EmployeeActions";
 
 export function Employees() {
   const [page, setPage] = useState<number>(1);
@@ -78,7 +79,7 @@ export function Employees() {
                       <TableCell>{emp.department.department_name}</TableCell>
                       <TableCell className="line-clamp-1">{emp.address}</TableCell>
                       <TableCell className="text-right">
-                        <div>Action</div>
+                        <EmployeeActions employee={emp} />
                       </TableCell>
                     </TableRow>
                   ))}
