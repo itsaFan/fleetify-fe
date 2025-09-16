@@ -20,6 +20,13 @@ export type EmployeeApiData = {
   department: number;
 };
 
-export type EmployeeFormDataType = z.infer<typeof EmployeeFormSchema>
-export type CreateEmpApiResp = ApiResponse<Employee>
-export type UpdateEmpApiResp = ApiResponse<Employee>
+export type EmployeeFormDataType = z.infer<typeof EmployeeFormSchema>;
+export type CreateEmpApiResp = ApiResponse<Employee>;
+export type UpdateEmpApiResp = ApiResponse<Employee>;
+
+export type AttendanceActionApiResp = ApiResponse<{
+  attendance_id: string;
+  employee_id: string;
+  clock_in: string;
+  clock_out?: string;
+}>;

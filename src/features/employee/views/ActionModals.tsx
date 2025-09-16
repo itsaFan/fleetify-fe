@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCreateEmployee, useDeleteEmployee, useUpdateEmployee } from "../hooks/employee-mutation";
+import { useEmployeAttendanceActionMutation } from "../hooks/attendance-mutation";
 
 type Props = {
   isOpen: boolean;
@@ -397,6 +398,95 @@ export function DeleteEmployeeModal({ isOpen, setIsOpen, empId }: Omit<Props, "e
               type="button"
               className="rounded-md text-sm px-2 py-1 bg-app-red text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
               Delete Employee
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+
+  if (!isOpen) return <></>;
+
+  // @ts-ignore
+  return ReactDOM.createPortal(content, document.getElementById("portal"));
+}
+
+export function AttendanceActionModal({ isOpen, setIsOpen, employee }: Omit<Props, "empId">) {
+  const { mutateAsync, isPending, errorMessage, successMessage, clearError, clearSuccess } = useEmployeAttendanceActionMutation();
+  useEffect(() => {
+    const body = document.querySelector("body");
+    if (isOpen) {
+      body!.style.overflowY = "hidden";
+    } else {
+      body!.style.overflowY = "scroll";
+    }
+  }, [isOpen]);
+
+  const closeModal = () => {
+    clearError();
+    clearSuccess();
+    setIsOpen(false);
+  };
+
+  const handleCheckin = async () => {
+    await mutateAsync({ empId: String(employee.employee_id), action: "in" });
+  };
+
+  const handelCheckOut = async () => {
+    await mutateAsync({ empId: String(employee.employee_id), action: "out" });
+  };
+
+  const content = (
+    <div
+      className={`fixed flex justify-center top-0 inset-x-0 z-[1000] h-dvh pb-12 pt-[25%] px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
+      onClick={closeModal}>
+      <button className="bg-none border-none text-app-red text-lg absolute cursor-pointer right-2 top-2">
+        <X />
+      </button>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        onClick={(e) => e.stopPropagation()}
+        className={`w-full max-w-md h-fit rounded-xl overflow-hidden shadow cursor-auto bg-secondary`}>
+        <div className="flex flex-col gap-1 p-4 w-full">
+          <div className="flex flex-col gap-2 justify-center text-center min-h-[8rem]">
+            <span className="font-bold text-lg">Attandance Action</span>
+            <span className="text-sm opacity-75">
+              I'm {employee.name} from {employee.department.department_name}
+            </span>
+
+            {successMessage && <span className="text-sm text-app-green">{successMessage}</span>}
+            {errorMessage && <span className="text-sm text-app-red">{errorMessage}</span>}
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-3 mt-3 border-t">
+            <button
+              onClick={handleCheckin}
+              type="button"
+              disabled={isPending}
+              className="rounded-md flex items-center gap-1 text-sm px-2 py-1 bg-app-blue text-white  disabled:opacity-50 disabled:cursor-not-allowed  hover:opacity-80 transition-opacity duration-200 ease-in-out">
+              {isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Check In"
+              )}
+            </button>
+            <button
+              onClick={handelCheckOut}
+              type="button"
+              disabled={isPending}
+              className="rounded-md flex items-center gap-1 text-sm px-2 py-1 bg-app-red text-white disabled:opacity-50 disabled:cursor-not-allowed   hover:opacity-80 transition-opacity duration-200 ease-in-out">
+              {isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Check Out"
+              )}
             </button>
           </div>
         </div>
