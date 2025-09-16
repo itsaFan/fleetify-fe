@@ -1,14 +1,15 @@
+
 import { ROUTES } from "@/constants/routes";
-import EmployeePage from "@/pages/employee/EmployeePage";
+import AttendancePage from "@/pages/attendance/AttendancePage";
 import type { RouteObject } from "react-router-dom";
 
-export function employeeRoutes(): RouteObject {
+export function attendanceRoutes(): RouteObject {
   return {
-    path: `/${ROUTES.EMPLOYEE.BASE}`,
+    path: `/${ROUTES.ATTENDANCES.BASE}`,
     children: [
       {
         index: true,
-        element: <EmployeePage />,
+        element: <AttendancePage />,
         loader: async () => {},
       },
     ],
