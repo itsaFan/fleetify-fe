@@ -372,7 +372,7 @@ export function DeleteEmployeeModal({ isOpen, setIsOpen, empId }: Omit<Props, "e
 
   const content = (
     <div
-      className={`fixed flex justify-center top-0 inset-x-0 z-[1000] h-dvh pb-12 pt-[25%] px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
+      className={`fixed flex justify-center top-0 inset-x-0 z-[1000] h-dvh pb-12 pt-24 sm:pt-32 px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
       onClick={closeModal}>
       <button className="bg-none border-none text-app-red text-lg absolute cursor-pointer right-2 top-2">
         <X />
@@ -438,7 +438,7 @@ export function AttendanceActionModal({ isOpen, setIsOpen, employee }: Omit<Prop
 
   const content = (
     <div
-      className={`fixed flex justify-center top-0 inset-x-0 z-[1000] h-dvh pb-12 pt-[25%] px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
+      className={`fixed flex justify-center top-0 inset-x-0 z-[1000] h-dvh pb-12 pt-24 sm:pt-32 px-4 bg-black/20 overflow-y-scroll cursor-pointer backdrop-blur-md`}
       onClick={closeModal}>
       <button className="bg-none border-none text-app-red text-lg absolute cursor-pointer right-2 top-2">
         <X />
