@@ -46,7 +46,7 @@ export default function Department() {
   const pagination = data?.pagination;
   const totalPages = pagination?.totalPages ?? 1;
 
-  console.log(departments);
+  // console.log(departments);
 
   return (
     <>

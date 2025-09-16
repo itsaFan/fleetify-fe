@@ -225,7 +225,7 @@ export function EditEmployeeModal({ isOpen, setIsOpen, employee }: Omit<Props, "
   };
 
   async function handleUpdateEmployee(formData: z.infer<typeof EmployeeFormSchema>) {
-    console.log("form", formData);
+    // console.log("form", formData);
     updateEmployee.mutateAsync(formData);
     setIsOpen(false);
     form.reset();
