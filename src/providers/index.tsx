@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import { QueryProviders } from "@/providers/query-providers";
 
 type ProvidersProps = {
@@ -6,9 +7,9 @@ type ProvidersProps = {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-      <QueryProviders>
-        {children}
-      </QueryProviders>
+    <QueryProviders>
+      <Toaster />
+      {children}
+    </QueryProviders>
   );
 }
-

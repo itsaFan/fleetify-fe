@@ -7,8 +7,10 @@ import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/use-debounce";
 import EmployeeActions from "./EmployeeActions";
 import { Plus } from "lucide-react";
+import { AddEmployeeModal } from "./ActionModals";
 
 export function Employees() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const debouncedSearch = useDebounce(search, 500);
@@ -49,8 +51,12 @@ export function Employees() {
         <div className="flex flex-wrap items-center justify-between">
           <span className="text-lg font-semibold">Total Employee ({pagination?.totalData || 0})</span>
 
-          <button type="button" className="rounded-md flex items-center gap-1 text-sm px-2 py-1 bg-app-brand text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
-            <Plus size={14} />Add Employee
+          <button
+            onClick={() => setIsOpen(true)}
+            type="button"
+            className="rounded-md flex items-center gap-1 text-sm px-2 py-1 bg-app-blue text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
+            <Plus size={14} />
+            Add Employee
           </button>
         </div>
         <div className="w-full h-[1px] bg-black/10" />
@@ -65,13 +71,13 @@ export function Employees() {
             }}
           />
         </div>
-        <div className="rounded-md border">
+        <div className="rounded-md border ">
           <Table className="">
             <TableHeader className="rounded-lg">
               <TableRow>
                 <TableHead className="">Name</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Address</TableHead>
+                <TableHead className="">Department</TableHead>
+                <TableHead className="">Address</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
@@ -81,8 +87,10 @@ export function Employees() {
                   {employees.map((emp, index) => (
                     <TableRow key={`${emp.id}-${index}`}>
                       <TableCell className="font-medium">{emp.name}</TableCell>
-                      <TableCell>{emp.department.department_name}</TableCell>
-                      <TableCell className="line-clamp-1">{emp.address}</TableCell>
+                      <TableCell className="">{emp.department.department_name}</TableCell>
+                      <TableCell>
+                        <div className="max-w-[14rem] truncate">{emp.address}</div>
+                      </TableCell>
                       <TableCell className="text-right">
                         <EmployeeActions employee={emp} />
                       </TableCell>
@@ -125,6 +133,8 @@ export function Employees() {
           </Pagination>
         </div>
       )}
+
+      <AddEmployeeModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 }
