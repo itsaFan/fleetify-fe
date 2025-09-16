@@ -19,7 +19,6 @@ export const useEmployeAttendanceActionMutation = () => {
     },
 
     onSuccess: (data) => {
-      // your API type is AttendanceActionApiResp, adjust path if needed
       const msg = (data as any)?.message || "Attendance recorded";
       setSuccessMessage(msg);
       setErrorMessage(null);
@@ -30,7 +29,6 @@ export const useEmployeAttendanceActionMutation = () => {
 
       if (isAxiosError(error)) {
         const resErrorMsg = error.response?.data?.message || "";
-        console.log("res", resErrorMsg);
 
         if (resErrorMsg.startsWith("not found: no open attendance")) {
           msg = "You don't have a check-in attendance";
