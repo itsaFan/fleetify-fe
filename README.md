@@ -52,3 +52,4 @@ npm install -g pnpm
 
 ## 🔧 Deployments
 #### API-Documentation: [Postman](https://documenter.getpostman.com/view/43445325/2sB3HqGHzu)
+### Live Website: [React-Vite](https://steffansim-fleetify.zeabur.app/)

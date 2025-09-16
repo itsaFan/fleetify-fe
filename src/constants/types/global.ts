@@ -25,6 +25,7 @@ export type Employee = {
 export type Attendance = {
   employee_id: string;
   employee_name: string;
+  department_name?: string;
   date_local: string;
   clock_in_local: string;
   clock_in_utc: string;

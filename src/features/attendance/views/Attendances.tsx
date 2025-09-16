@@ -93,6 +93,7 @@ export default function Attendances() {
               <TableRow>
                 <TableHead className="">Date</TableHead>
                 <TableHead className="">Employee</TableHead>
+                <TableHead className="">Department</TableHead>
                 <TableHead className="">Check In</TableHead>
                 <TableHead className="">Check Out</TableHead>
               </TableRow>
@@ -104,6 +105,7 @@ export default function Attendances() {
                     <TableRow key={`${atd.attendance_id}-${index}`}>
                       <TableCell className="font-medium">{atd.date_local}</TableCell>
                       <TableCell className="">{atd.employee_name}</TableCell>
+                      <TableCell className="">{atd.department_name || "Unknown Department"}</TableCell>
                       <TableCell>
                         <div className="flex flex-col">
                           <span> {atd.clock_in_local} </span>
