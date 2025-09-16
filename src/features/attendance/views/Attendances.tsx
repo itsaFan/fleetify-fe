@@ -32,6 +32,12 @@ export default function Attendances() {
     setDateFilter(getDefaultMonthRange());
   };
 
+  const formatStatusOut = (status: string) => {
+    if (!status) return "";
+    if (status === "no_out") return "Not checked out yet";
+    return status.replace(/_/g, " ");
+  };
+
   const query: AtdQueryParams = {
     page: page,
     limit: 5,
@@ -62,7 +68,6 @@ export default function Attendances() {
   const attendances = data?.attendances || [];
   const pagination = data?.pagination;
   const totalPages = pagination?.totalPages ?? 1;
-
 
   return (
     <>
@@ -111,7 +116,8 @@ export default function Attendances() {
                         <div className="flex flex-col">
                           <span> {atd.clock_out_local} </span>
                           <span className={`text-xs opacity-75 capitalize ${atd.status_out === "early_leave" ? "text-app-red" : "text-app-blue"}`}>
-                            {atd.status_out}: {atd.delta_out_minutes} mins
+                            {formatStatusOut(atd.status_out)}
+                            {atd.status_out !== "no_out" && `: ${atd.delta_out_minutes} mins`}
                           </span>
                         </div>
                       </TableCell>
