@@ -23,7 +23,6 @@ dist-ssr
 # Dependency directories
 node_modules
 jspm_packages
-pnpm-lock.yaml
 
 # Temporary files
 tmp
