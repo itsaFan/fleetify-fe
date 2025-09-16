@@ -1,13 +1,14 @@
-import { Pencil, Trash } from "lucide-react";
 import { useState } from "react";
-import { DeleteEmployeeModal, EditEmployeeModal } from "./ActionModals";
-import type { Employee } from "@/constants/types";
+
+import { Pencil, Trash } from "lucide-react";
+import type { Department } from "@/constants/types";
+import { DeleteDepartmentModal, EditDepartmentModal } from "./ActionModals";
 
 type Props = {
-  employee: Employee;
+  department: Department;
 };
 
-export default function EmployeeActions({ employee }: Props) {
+export default function DepartmentActions({ department }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isOpenDel, setIsOpenDel] = useState<boolean>(false);
 
@@ -27,8 +28,9 @@ export default function EmployeeActions({ employee }: Props) {
           <Trash size={14} />
         </button>
       </div>
-      <EditEmployeeModal isOpen={isOpen} setIsOpen={setIsOpen} employee={employee} />
-      <DeleteEmployeeModal isOpen={isOpenDel} setIsOpen={setIsOpenDel} empId={employee.employee_id} />
+
+      <EditDepartmentModal isOpen={isOpen} setIsOpen={setIsOpen} department={department} />
+      <DeleteDepartmentModal isOpen={isOpenDel} setIsOpen={setIsOpenDel} department={department} />
     </>
   );
 }

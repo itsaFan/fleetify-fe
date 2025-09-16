@@ -1,16 +1,16 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useEmployeeListQuery } from "../hooks/employee-query";
 import { useState } from "react";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import type { QueryParams } from "../types";
-import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/use-debounce";
-import EmployeeActions from "./EmployeeActions";
+import type { QueryParams } from "../types";
+import { useDepartmentListQuery } from "@/features/employee/hooks/department-query";
 import { Plus } from "lucide-react";
-import { AddEmployeeModal } from "./ActionModals";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import DepartmentActions from "./DepartmentActions";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { AddDepartmentModal } from "./ActionModals";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function Employees() {
+export default function Department() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
@@ -20,16 +20,16 @@ export function Employees() {
     page: page,
     limit: 5,
     sortBy: "id",
-    sortDir: "asc",
+    sortDir: "desc",
     search: debouncedSearch,
   };
 
-  const { data, isLoading, isError, error } = useEmployeeListQuery(query);
+  const { data, isLoading, isError, error } = useDepartmentListQuery(query);
 
   if (isLoading) {
     return (
       <>
-        <Skeleton className="w-full h-40 sm:h-[24rem]" />
+       <Skeleton className="w-full h-40 sm:h-[24rem]" />
       </>
     );
   }
@@ -42,29 +42,32 @@ export function Employees() {
     );
   }
 
-  const employees = data?.employees || [];
+  const departments = data?.departments || [];
   const pagination = data?.pagination;
   const totalPages = pagination?.totalPages ?? 1;
+
+  console.log(departments);
 
   return (
     <>
       <div className="flex flex-col gap-3  p-3 sm:p-6 border border-border rounded-lg shadow-md w-full min-h-[24rem]">
         <div className="flex flex-wrap items-center justify-between">
-          <span className="text-lg font-semibold">Total Employee ({pagination?.totalData || 0})</span>
+          <span className="text-lg font-semibold">Total Departments ({pagination?.totalData || 0})</span>
 
           <button
             onClick={() => setIsOpen(true)}
             type="button"
             className="rounded-md flex items-center gap-1 text-sm px-2 py-1 bg-app-blue text-white  hover:opacity-80 transition-opacity duration-200 ease-in-out">
             <Plus size={14} />
-            Add Employee
+            Add Department
           </button>
         </div>
+
         <div className="w-full h-[1px] bg-black/10" />
         <div>
           <Input
             className="max-w-[16rem]"
-            placeholder="Search name or department"
+            placeholder="Search department"
             value={search}
             onChange={(e) => {
               setPage(1);
@@ -72,36 +75,35 @@ export function Employees() {
             }}
           />
         </div>
+
         <div className="rounded-md border ">
           <Table className="">
             <TableHeader className="rounded-lg">
               <TableRow>
                 <TableHead className="">Name</TableHead>
-                <TableHead className="">Department</TableHead>
-                <TableHead className="">Address</TableHead>
+                <TableHead className="">Max Clock In</TableHead>
+                <TableHead className="">Max Clock Out</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {employees.length > 0 ? (
+              {departments.length > 0 ? (
                 <>
-                  {employees.map((emp, index) => (
-                    <TableRow key={`${emp.id}-${index}`}>
-                      <TableCell className="font-medium">{emp.name}</TableCell>
-                      <TableCell className="">{emp.department.department_name}</TableCell>
-                      <TableCell>
-                        <div className="max-w-[14rem] truncate">{emp.address}</div>
-                      </TableCell>
+                  {departments.map((dept, index) => (
+                    <TableRow key={`${dept.id}-${index}`}>
+                      <TableCell className="font-medium">{dept.department_name}</TableCell>
+                      <TableCell className="">{dept.max_clock_in}</TableCell>
+                      <TableCell>{dept.max_clock_out}</TableCell>
                       <TableCell className="text-right">
-                        <EmployeeActions employee={emp} />
+                        <DepartmentActions department={dept} />
                       </TableCell>
                     </TableRow>
                   ))}
                 </>
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-10 font-medium">
-                    No Employee Found
+                  <TableCell colSpan={4} className="text-center py-10 font-medium">
+                    No Departments Found
                   </TableCell>
                 </TableRow>
               )}
@@ -135,7 +137,7 @@ export function Employees() {
         </div>
       )}
 
-      <AddEmployeeModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <AddDepartmentModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 }

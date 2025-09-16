@@ -1,10 +1,9 @@
-
-
-
-
+import Department from "@/features/department/views/Department";
 
 export default function DepartmentPage() {
   return (
-    <div>DepartmentPage</div>
-  )
+    <div className="max-w-3xl w-full">
+      <Department />
+    </div>
+  );
 }
